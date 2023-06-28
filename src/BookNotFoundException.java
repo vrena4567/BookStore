@@ -1,2 +1,5 @@
-package PACKAGE_NAME;public class BookNotFoundException {
+public class BookNotFoundException extends Exception{
+    public BookNotFoundException() {
+        super("Book not found");
+    }
 }
