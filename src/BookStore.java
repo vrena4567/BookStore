@@ -1,25 +1,38 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BookStore {
-    private List<Book> bookList;
+    private Map<Book, Integer> bookList;
+
+    BookStore() {
+        this.bookList = new HashMap<>();
+    }
 
     public void addBook(Book book) {
-        bookList.add(book);
+        if (bookList.containsKey(book)) {
+            int eddigMennyiIlyenKonyvVan = bookList.get(book);
+            bookList.put(book, eddigMennyiIlyenKonyvVan + 1);
+        } else {
+            bookList.put(book, 1);
+        }
+    }
+
+    public void addMultipleBooks(Book book, int quantity) {
+        bookList.put(book, quantity);
     }
 
     public Book findBook(String title) throws BookNotFoundException {
-        for (Book actual : bookList) {
-            if (actual.equals(title)) {
+        for (Book actual : bookList.keySet()) {
+            if (actual.getTitle().equals(title)) {
                 return actual;
-            } else {
-                throw new BookNotFoundException();
             }
         }
-        return null;
+        throw new BookNotFoundException("Book not found " + title);
     }
 
-    public void displayBooks(){
+    public void displayBooks() {
         System.out.println(bookList);
     }
 }
